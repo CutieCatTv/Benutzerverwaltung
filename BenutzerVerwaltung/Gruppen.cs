@@ -24,7 +24,7 @@ namespace BenutzerVerwaltung
 
             modRechte.Add("InfosAbfragen");
             modRechte.Add("InfosÄndern");
-           // modRechte.Add("InfosAndererAccountsAbfragen");
+            modRechte.Add("InfosAndererAccountsAbfragen");
             modRechte.Add("InfosAndererAccountsÄndern");
             modRechte.Add("BenutzerListe");
           
@@ -86,7 +86,6 @@ namespace BenutzerVerwaltung
 
         static public void Aktionen()
         {
-            AktionenAusführen();
             while (nächsteAktion)
             {
                 Console.WriteLine("\nWas möchtest du tun?\n");
@@ -130,24 +129,6 @@ namespace BenutzerVerwaltung
                         break;
                 }
             }
-        }
-
-        static public void AktionenAusführen()
-        {
-            int j = 1;
-             foreach (string i in Gruppen.modRechte)
-                    {
-                        if (Gruppen.alleRechte.ContainsKey(i) == true)
-                        {
-                    string value = alleRechte[i];
-                            if(value.Contains("Information") == true) {
-                                Console.WriteLine(j);
-                             }
-                            
-                            j++;
-                            
-                        }
-                    }
-        }
+        }  
     }
 }
