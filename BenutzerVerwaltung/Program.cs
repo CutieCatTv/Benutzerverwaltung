@@ -68,16 +68,20 @@ namespace BenutzerVerwaltung
         }
 
         static public void PasswortVerschlüsseln()
-        {
-            passwort = null;
+      {
+            string Content = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";          
+
+            passwort = "";
             while (true)
             {
                 var key = System.Console.ReadKey(true);
-                
-                if (key.Key == ConsoleKey.Enter)
-                    break;
-                passwort += key.KeyChar;
-                Console.Write("*");
+                if (Content.ToArray().Contains((key.KeyChar)))
+                {
+                    passwort += key.KeyChar;
+                    Console.Write("*");
+                }   
+                else if(key.Key == ConsoleKey.Enter) { break; }
+               
             }
         }
     }

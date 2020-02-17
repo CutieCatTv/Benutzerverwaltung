@@ -24,9 +24,10 @@ namespace BenutzerVerwaltung
 
             modRechte.Add("InfosAbfragen");
             modRechte.Add("InfosÄndern");
+            modRechte.Add("BenutzerListe");
             modRechte.Add("InfosAndererAccountsAbfragen");
             modRechte.Add("InfosAndererAccountsÄndern");
-            modRechte.Add("BenutzerListe");
+            
           
             adminRechte.Add("InfosAbfragen");
             adminRechte.Add("InfosÄndern");

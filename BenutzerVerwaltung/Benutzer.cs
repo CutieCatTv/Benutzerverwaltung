@@ -211,7 +211,7 @@ namespace BenutzerVerwaltung
         static public void PasswortGenerieren()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            string Content = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw";
+            string Content = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             Random random = new Random();
             for (int i = 0; i < 10; i++)
                 stringBuilder.Append(Content[random.Next(Content.Length)]);
