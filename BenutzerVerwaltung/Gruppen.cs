@@ -5,18 +5,15 @@ using System.Text;
 
 namespace BenutzerVerwaltung
 {
-    class Gruppen
+    public class Gruppen
     {
-        private static bool nächsteAktion = true;
+        public List<string> userRechte = new List<string>();
+        public List<string> modRechte = new List<string>();
+        public List<string> adminRechte = new List<string>();
 
-        public static List<string> userRechte = new List<string>();
-        public static List<string> modRechte = new List<string>();
-        public static List<string> adminRechte = new List<string>();
+        public Dictionary<string, string> alleRechte = new Dictionary<string, string>();
 
-        public static Dictionary<string, string> alleRechte = new Dictionary<string, string>();
-
-
-        static public void ListenErstellen()
+        public Gruppen()
         {
             userRechte.Add("InfosAbfragen");
             userRechte.Add("InfosÄndern");
@@ -27,8 +24,7 @@ namespace BenutzerVerwaltung
             modRechte.Add("BenutzerListe");
             modRechte.Add("InfosAndererAccountsAbfragen");
             modRechte.Add("InfosAndererAccountsÄndern");
-            
-          
+
             adminRechte.Add("InfosAbfragen");
             adminRechte.Add("InfosÄndern");
             adminRechte.Add("BenutzerListe");
@@ -46,90 +42,71 @@ namespace BenutzerVerwaltung
             alleRechte.Add("NeueBenutzerAnlegen", "6: Neue Benutzer anlegen");
             alleRechte.Add("BenutzernGruppenZuweisen", "7: Benutzern Gruppen zuweisen");
             alleRechte.Add("GruppenRechteZuweisen", "8: Gruppen neue Rechte zuweisen");
-            
-            
         }
 
-        static public void RechteDesAktuellenBenutzers()
+        public void GruppenRechteZuweisen()
         {
+            int i = 1;
+            Console.WriteLine("Alle Rechte:");
+            foreach (string key in alleRechte.Keys)
+            {
+                Console.WriteLine(i + ": " + key);
+                i++;
+            }
+            Console.WriteLine("\nZu welcher Gruppe möchten sie ein Recht hinzufügen?");
+            Console.WriteLine("\n1: User   2: Mod    3: Admin");
+            Console.WriteLine("Eingabe:");
+            int gruppe = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("\nWelches Recht möchten sie dieser Gruppe zuweisen?");
+            Console.WriteLine("Eingabe:");
+            int recht = Convert.ToInt32(Console.ReadLine()) - 1;
 
-            switch (Benutzer.benutzer[Program.benutzerName].Gruppe)
+            switch (gruppe)
+            {
+                case 1:
+                    userRechte.Add(alleRechte.ElementAt(recht).Key);
+                    break;
+                case 2:
+                    modRechte.Add(alleRechte.ElementAt(recht).Key);
+                    break;
+                case 3:
+                    adminRechte.Add(alleRechte.ElementAt(recht).Key);
+                    break;
+            }
+        }
+
+        public void RechteEinesBenutzers(Benutzer benutzer)
+        {
+            switch (benutzer.Gruppe)
             {
                 case "User":
-                    foreach (string i in Gruppen.userRechte)
+                    foreach (string i in userRechte)
                     {
-                        if (Gruppen.alleRechte.ContainsKey(i) == true)
+                        if (alleRechte.ContainsKey(i))
                         {
-                            Console.WriteLine(Gruppen.alleRechte[i]);
+                            Console.WriteLine(alleRechte[i]);
                         }
                     }
                     break;
                 case "Mod":
-                    foreach (string i in Gruppen.modRechte)
+                    foreach (string i in modRechte)
                     {
-                        if (Gruppen.alleRechte.ContainsKey(i) == true)
+                        if (alleRechte.ContainsKey(i))
                         {
-                            Console.WriteLine(Gruppen.alleRechte[i]);
+                            Console.WriteLine(alleRechte[i]);
                         }
                     }
                     break;
                 case "Admin":
-                    foreach (string i in Gruppen.adminRechte)
+                    foreach (string i in adminRechte)
                     {
-                        if (Gruppen.alleRechte.ContainsKey(i) == true)
+                        if (alleRechte.ContainsKey(i))
                         {
-                            Console.WriteLine(Gruppen.alleRechte[i]);
+                            Console.WriteLine(alleRechte[i]);
                         }
                     }
                     break;
             }
         }
-
-        static public void Aktionen()
-        {
-            while (nächsteAktion)
-            {
-                Console.WriteLine("\nWas möchtest du tun?\n");
-                RechteDesAktuellenBenutzers();
-                Console.WriteLine("\nEingabe:");
-                int rechtAusführen = Convert.ToInt32(Console.ReadLine());
-
-                switch (rechtAusführen)
-                {
-                    case 1:
-                        Benutzer.benutzer[Benutzer.aktuellerBenutzer.BenutzerName].InformationenAbfragen();
-                        break;
-                    case 2:
-                        Benutzer.benutzer[Benutzer.aktuellerBenutzer.BenutzerName].InformationenÄndern();
-                        break;
-                    case 3:
-                        Benutzer.BenutzerListe();
-                        break;
-                    case 4:
-                        Console.WriteLine("\nVon welchem Account möchtest du die Daten?");
-                        Console.WriteLine("\nAccountname:");
-                        string fremdenBenutzerEinsehen = Console.ReadLine();
-
-                        Benutzer.benutzer[fremdenBenutzerEinsehen].InformationenAbfragen();
-                        break;
-                    case 5:
-                        Console.WriteLine("Von welchem Account möchtest du die Daten ändern?");
-                        Console.WriteLine("\nAccountname:");
-                        string fremdenBenutzerÄndern = Console.ReadLine();
-
-                        Benutzer.benutzer[fremdenBenutzerÄndern].InformationenÄndern();
-                        break;
-                    case 6:
-                        Benutzer.NeueBenutzerAnlegen();
-                        break;
-                    case 7:
-                        Benutzer.GruppenZuweisen();
-                        break;
-                    case 8:
-                        Benutzer.GruppenRechteZuweisen();
-                        break;
-                }
-            }
-        }  
     }
 }
