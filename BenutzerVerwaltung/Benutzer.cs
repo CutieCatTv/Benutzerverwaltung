@@ -9,8 +9,11 @@ namespace BenutzerVerwaltung
     {
         public static Dictionary<string, Benutzer> benutzer = new Dictionary<string, Benutzer>();
 
-        private bool weiterAltesPasswort = false;
-        private bool weiterNeuesPasswort = false;
+        public bool weiterAltesPasswort;
+        private bool weiterNeuesPasswortWdh;
+        public static bool weiterNeuesPasswort;
+        public static string neuesPasswort;
+
         static string generiertesPasswort;
 
         public static Benutzer aktuellerBenutzer;
@@ -138,6 +141,7 @@ namespace BenutzerVerwaltung
         public void PasswortÄndern()
         {
             weiterAltesPasswort = false;
+            weiterNeuesPasswortWdh = false;
             weiterNeuesPasswort = false;
 
             while (!weiterAltesPasswort)
@@ -151,21 +155,30 @@ namespace BenutzerVerwaltung
                 else { weiterAltesPasswort = true; }
             }
 
-            while (!weiterNeuesPasswort)
+            while(!weiterNeuesPasswortWdh)
             {
-                Console.WriteLine("\nNeues Passwort: ");
-                Program.PasswortVerschlüsseln();
-                if (Program.passwort[0] == ' ' || Program.passwort[Program.passwort.Length - 1] == ' ')
+                while (!weiterNeuesPasswort)
                 {
-                    Console.WriteLine("\nDas Passwort darf weder am Anfang noch am Ende ein Leerzeichen haben.");
+                    Console.WriteLine("\nNeues Passwort: ");
+                    Program.PasswortVerschlüsseln();
+                    neuesPasswort = Program.passwort;
+                    if (Program.passwort.Length < 6 || Program.passwort.Length > 10)
+                    {
+                        Console.WriteLine("\nDas Passwort muss zwischen 6 und 10 Zeichen sein.");
+                    }
+                    else { weiterNeuesPasswort = true; }
                 }
-                else if(Program.passwort.Length < 6 || Program.passwort.Length > 10) 
-                {
-                    Console.WriteLine("\nDas Passwort muss zwischen 6 und 10 Zeichen sein.");
-                }
-                else { weiterNeuesPasswort = true;  }
 
-                benutzer[BenutzerName].Passwort = Program.passwort;               
+                Console.WriteLine("\nNeues Passwort wiederholen: ");
+                Program.PasswortVerschlüsseln();
+                benutzer[BenutzerName].Passwort = Program.passwort;
+
+                if (Benutzer.neuesPasswort != Program.passwort)
+                {
+                    Console.WriteLine("\nDie beiden Passwörter stimmen nicht überein.");
+                    weiterNeuesPasswort = false;
+                }
+                else { weiterNeuesPasswortWdh = true; }
             }            
         }
 

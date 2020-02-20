@@ -38,7 +38,7 @@ namespace BenutzerVerwaltung
             adminRechte.Add("BenutzernGruppenZuweisen");
             adminRechte.Add("GruppenRechteZuweisen");
 
-            alleRechte.Add("InfosAbfragen", "1 : Information zum Account abfragen");
+            alleRechte.Add("InfosAbfragen", "1: Information zum Account abfragen");
             alleRechte.Add("InfosÄndern", "2: Informationen des Accounts ändern");
             alleRechte.Add("BenutzerListe", "3: Liste aller Benutzer abfragen");
             alleRechte.Add("InfosAndererAccountsAbfragen", "4: Information eines anderen Account abfragen");

@@ -81,7 +81,6 @@ namespace BenutzerVerwaltung
                     Console.Write("*");
                 }   
                 else if(key.Key == ConsoleKey.Enter) { break; }
-               
             }
         }
     }
