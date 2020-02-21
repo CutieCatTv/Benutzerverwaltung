@@ -7,9 +7,9 @@ namespace BenutzerVerwaltung
 {
     public class Gruppen
     {
-        public List<string> userRechte = new List<string>();
-        public List<string> modRechte = new List<string>();
-        public List<string> adminRechte = new List<string>();
+        private readonly List<string> userRechte = new List<string>();
+        private readonly List<string> modRechte = new List<string>();
+        private readonly List<string> adminRechte = new List<string>();
 
         public Dictionary<string, string> alleRechte = new Dictionary<string, string>();
 
@@ -44,37 +44,6 @@ namespace BenutzerVerwaltung
             alleRechte.Add("GruppenRechteZuweisen", "8: Gruppen neue Rechte zuweisen");
         }
 
-        public void GruppenRechteZuweisen()
-        {
-            int i = 1;
-            Console.WriteLine("Alle Rechte:");
-            foreach (string key in alleRechte.Keys)
-            {
-                Console.WriteLine(i + ": " + key);
-                i++;
-            }
-            Console.WriteLine("\nZu welcher Gruppe möchten sie ein Recht hinzufügen?");
-            Console.WriteLine("\n1: User   2: Mod    3: Admin");
-            Console.WriteLine("Eingabe:");
-            int gruppe = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("\nWelches Recht möchten sie dieser Gruppe zuweisen?");
-            Console.WriteLine("Eingabe:");
-            int recht = Convert.ToInt32(Console.ReadLine()) - 1;
-
-            switch (gruppe)
-            {
-                case 1:
-                    userRechte.Add(alleRechte.ElementAt(recht).Key);
-                    break;
-                case 2:
-                    modRechte.Add(alleRechte.ElementAt(recht).Key);
-                    break;
-                case 3:
-                    adminRechte.Add(alleRechte.ElementAt(recht).Key);
-                    break;
-            }
-        }
-
         public void RechteEinesBenutzers(Benutzer benutzer)
         {
             switch (benutzer.Gruppe)
@@ -105,6 +74,37 @@ namespace BenutzerVerwaltung
                             Console.WriteLine(alleRechte[i]);
                         }
                     }
+                    break;
+            }
+        }
+
+        public void GruppenRechteZuweisen()
+        {
+            int i = 1;
+            Console.WriteLine("Alle Rechte:");
+            foreach (string key in alleRechte.Keys)
+            {
+                Console.WriteLine(i + ": " + key);
+                i++;
+            }
+            Console.WriteLine("\nZu welcher Gruppe möchten sie ein Recht hinzufügen?");
+            Console.WriteLine("\n1: User   2: Mod    3: Admin");
+            Console.WriteLine("Eingabe:");
+            int gruppe = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("\nWelches Recht möchten sie dieser Gruppe zuweisen?");
+            Console.WriteLine("Eingabe:");
+            int recht = Convert.ToInt32(Console.ReadLine()) - 1;
+
+            switch (gruppe)
+            {
+                case 1:
+                    userRechte.Add(alleRechte.ElementAt(recht).Key);
+                    break;
+                case 2:
+                    modRechte.Add(alleRechte.ElementAt(recht).Key);
+                    break;
+                case 3:
+                    adminRechte.Add(alleRechte.ElementAt(recht).Key);
                     break;
             }
         }

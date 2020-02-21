@@ -4,8 +4,6 @@ namespace BenutzerVerwaltung
 {
     public class Benutzer
     {
-        public bool weiterAltesPasswort;
-
         public string BenutzerName { get; set; }
         public string Passwort { get; set; }
         public string Geburtsdatum { get; set; }
@@ -41,13 +39,13 @@ namespace BenutzerVerwaltung
 
         public void PasswortÄndern()
         {
-            bool weiterAltesPasswort = false;
-            bool weiterNeuesPasswortWdh = false;
-            bool weiterNeuesPasswort = false;
+            bool altesPasswortRichtig = false;
+            bool neuesPasswortRichtig = false;
+            bool neuesPasswortWdhRichtig = false;
             string passwort;
             string neuesPasswort = "";
 
-            while (!weiterAltesPasswort)
+            while (!altesPasswortRichtig)
             {
                 Console.WriteLine("Altes Passwort:");
                 passwort = PasswortUtils.PasswortVerschlüsseltEinlesen();
@@ -55,12 +53,12 @@ namespace BenutzerVerwaltung
                 {
                     Console.WriteLine("\nDas eingegebene Passwort ist nicht korrekt");
                 }
-                else { weiterAltesPasswort = true; }
+                else { altesPasswortRichtig = true; }
             }
 
-            while (!weiterNeuesPasswortWdh)
+            while (!neuesPasswortWdhRichtig)
             {
-                while (!weiterNeuesPasswort)
+                while (!neuesPasswortRichtig)
                 {
                     Console.WriteLine("\nNeues Passwort: ");
                     passwort = PasswortUtils.PasswortVerschlüsseltEinlesen();
@@ -69,27 +67,36 @@ namespace BenutzerVerwaltung
                     {
                         Console.WriteLine("\nDas Passwort muss zwischen 6 und 10 Zeichen sein.");
                     }
-                    else { weiterNeuesPasswort = true; }
+                    else { neuesPasswortRichtig = true; }
                 }
 
                 Console.WriteLine("\nNeues Passwort wiederholen: ");
                 passwort = PasswortUtils.PasswortVerschlüsseltEinlesen();
-                Passwort = passwort;
 
                 if (neuesPasswort != passwort)
                 {
                     Console.WriteLine("\nDie beiden Passwörter stimmen nicht überein.");
-                    weiterNeuesPasswort = false;
+                    neuesPasswortRichtig = false;
                 }
-                else { weiterNeuesPasswortWdh = true; }
+                else 
+                {
+                    neuesPasswortRichtig = true;
+                    Passwort = passwort;
+                }
             }
         }
 
         public void GeburtsdatumÄndern()
         {
-            Console.WriteLine("Jetziges Geburtsdatum: " + Geburtsdatum);
-            Console.WriteLine("Neues Geburtsdatum: ");
-            string geburtsdatumNeu = Console.ReadLine();
+            bool neuesGeburtsdatumRichtig = false;
+            string geburtsdatumNeu = "";
+            while (!neuesGeburtsdatumRichtig)
+            {
+                Console.WriteLine("Jetziges Geburtsdatum: " + Geburtsdatum);
+                Console.WriteLine("Neues Geburtsdatum: ");
+                geburtsdatumNeu = Console.ReadLine();
+                neuesGeburtsdatumRichtig = GeburtsdatumUtils.isDateValid(geburtsdatumNeu);          
+            }
             Geburtsdatum = geburtsdatumNeu;
         }
 
